@@ -1,0 +1,1 @@
+arithmax_f402\startup_stm32f401xc.o: startup_stm32f401xc.s

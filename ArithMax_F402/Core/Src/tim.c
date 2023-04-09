@@ -285,7 +285,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) //TIM10中断周期：5ms
 /**********************************************************************/
 /**********************************************************************/
 		static uint8_t Cnt_LED = 0;
-	  static uint8_t Cnt_Cursor = 0;
 	
 
 /**********************************************************************/
@@ -301,25 +300,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) //TIM10中断周期：5ms
 						Cnt_LED=0;
 				}	
 				
-				if(Line0CursorDispFlag)
-				{
-						Cnt_Cursor++;
-						if(Cnt_Cursor==100)
-						{
-								LCD_ShowCursor(1,Line0CursorPos);
-						    LCD_Update();
-						}
-						else if(Cnt_Cursor==200)
-						{
-								Cnt_Cursor=0;
-								LCD_ShowCursor(0,Line0CursorPos);
-								LCD_Update();
-						}
-				}
-				else
-				{
-						Cnt_Cursor=0;
-				}
+				gui_updtCursor_tim10_500ms();
 				
 			
 		}	

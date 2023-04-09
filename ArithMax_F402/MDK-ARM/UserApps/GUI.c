@@ -1,39 +1,234 @@
 #include <main.h>
 #include <string.h>
 #include <stdlib.h>
+#include "dynamic_string.h"
 #include "matkeyboard.h"
 #include "arithmatic.h"
 #include "gui.h"
 #include "st7565.h"
 
-char *Line0 = "";
-char *Line1 = "";
+//GUI line0 string memory zone, max size LINE0_LEN_MAX
+char *line0_memory = "";
+//GUI line0 string displaying memory zone, 16 chars max could to be displayed
+char line0_disp[17] = "";
 
-char Line0_disp[17] = "";
-char Line1_disp[17] = "";
 
-uint8_t Line0CursorPos=0;//x coor of Line0Cursor(real Cursor shown on display,equal with String lenth on the left side of cursor in num)
-uint8_t Line0EditCursor=0;//x coor of Line0EditCursor(string insert position in Line0 buffer,invisible)
+//GUI cursor param struct
+gui_cursor_t line0_cursor;
 
-uint8_t Line0CursorDispFlag=1;//Line0 cursor display switch
 
-uint8_t Line0mapBias=0;//address bias of function mapLine02dispBuf
-
-void dispstr_malloc(void)
+/*****************************************************************************
+* @brief  initialing the gui display
+* @param  none
+* @retval none
+******************************************************************************/
+void gui_init(void)
 {
-		Line0 = (char *)malloc(0);
-		Line1 = (char *)malloc(0);
+		line0_cursor.cursor_displaying_flag = 1;
+	  line0_cursor.memoryCursor_pos = 0;
+		line0_cursor.dispCursor_pos = 0;
+		line0_cursor.intercept_pos = 0;
+	
+		gui_displayStr_malloc();
+
 }
 
-void Line0DispUpdt(void)
+/*****************************************************************************
+* @brief  update the displayed cursor status on screen in tim10 every 500ms
+* @param  none
+* @retval none
+******************************************************************************/
+void gui_updtCursor_tim10_500ms(void)
 {
-		LCD_ShowStr(0,0,12,(uint8_t *)"                ",1);
-		LCD_ShowStr(0,0,12,(uint8_t *)Line0_disp,1);
-		LCD_Update();
+		static uint8_t Cnt_LED = 0;
+	  static uint8_t Cnt_Cursor = 0;
+	
+		if(line0_cursor.cursor_displaying_flag)
+		{
+				Cnt_Cursor++;
+				if(Cnt_Cursor==50)
+				{
+						gui_updtCursor(1,line0_cursor.dispCursor_pos);
+						LCD_GRAM_Update();
+				}
+				else if(Cnt_Cursor==100)
+				{
+						Cnt_Cursor=0;
+						gui_updtCursor(0,line0_cursor.dispCursor_pos);
+						LCD_GRAM_Update();
+				}
+		}
+		else
+		{
+				Cnt_Cursor=0;
+		}
 }
 
 
-void LCD_ShowCursor(uint8_t en, uint8_t pos)
+/*****************************************************************************
+* @brief  clear gui displaying info while pressing AC
+* @param  none
+* @retval none
+******************************************************************************/
+void gui_disp_all_clear(void)
+{
+		free(line0_memory);
+		memset(line0_disp,0,17);
+		gui_init();
+		gui_line0_displayUpdt();
+}
+
+
+/******************************************************************************
+* @brief  Update content of Line0 buffer according to key pressed
+* @param  key_val: the key pressed
+					key_update:key_val updating flag
+* @retval none
+******************************************************************************/
+void gui_line0Updt_from_keypad(uint8_t key_val, uint8_t* key_update)
+{
+		if(*key_update)
+		{
+				*key_update=0;
+				switch(key_val)
+				{
+						case KEY_0:
+								dynamicStr_strcat("0",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+					  case KEY_1:
+								dynamicStr_strcat("1",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+					  case KEY_2:
+								dynamicStr_strcat("2",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+					  case KEY_3:
+								dynamicStr_strcat("3",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+					  case KEY_4:
+								dynamicStr_strcat("4",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+					  case KEY_5:
+								dynamicStr_strcat("5",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+					  case KEY_6:
+								dynamicStr_strcat("6",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+					  case KEY_7:
+								dynamicStr_strcat("7",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+					  case KEY_8:
+							  dynamicStr_strcat("8",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+					  case KEY_9:
+								dynamicStr_strcat("9",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+						case KEY_DOT:
+								dynamicStr_strcat(".",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+						case KEY_PLUS:
+								dynamicStr_strcat("+",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+					  case KEY_MINUS:
+								dynamicStr_strcat("-",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+					  case KEY_MUL:
+								dynamicStr_strcat("*",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+						case KEY_DIVID:
+								dynamicStr_strcat("/",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+						case KEY_LPARE:
+								dynamicStr_strcat("(",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+						case KEY_RPARE:
+								dynamicStr_strcat(")",&line0_memory,line0_cursor.memoryCursor_pos, LINE0_LEN_MAX);
+								line0Cursor_scroll(1,0);
+								
+								break;
+						case KEY_DEL:
+								if(!dynamicStr_backspace(line0_cursor.memoryCursor_pos, &line0_memory))
+								{
+										line0Cursor_scroll(0,0);
+										
+								}
+								break;
+						case KEY_AC:
+								gui_disp_all_clear();
+								break;
+								
+						case KEY_LEFT:
+								line0Cursor_scroll(0,1);
+								
+								break;
+						case KEY_RIGHT:	
+								line0Cursor_scroll(1,1);
+							
+								break;
+						case KEY_EQUAL:
+								//input2RPN_conv();
+								break;
+				}
+		}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*****************************************************************************
+* @brief  update the displayed cursor status on screen
+* @param  en: cursor enable switch
+					pos: x_coor of cursor to display
+* @retval none
+******************************************************************************/
+static void gui_updtCursor(uint8_t en, uint8_t pos)
 {
 		static uint8_t last_pos = 0;
 
@@ -50,129 +245,34 @@ void LCD_ShowCursor(uint8_t en, uint8_t pos)
 						LCD_DrawLine(6*last_pos-1,1,6*last_pos-1,10,0);
 		}
 		last_pos = pos;
-		LCD_DrawLine(6*pos-1,1,6*pos-1,10,en);
-		
+		LCD_DrawLine(6*pos-1,1,6*pos-1,10,en);	
 }
 
+
 /******************************************************************************
-* @brief  Update content of Line0 buffer according to key pressed
-* @param  key_val: the key pressed
-					key_update:key_val updating flag
+* @brief  malloc GUI line string memory while initing
+* @param  none
 * @retval none
 ******************************************************************************/
-void Line0Key2mani(uint8_t key_val, uint8_t* key_update)
+static void gui_displayStr_malloc(void)
 {
-		if(*key_update)
-		{
-				*key_update=0;
-				switch(key_val)
-				{
-						case KEY_0:
-								strcat_dynamic("0",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-					  case KEY_1:
-								strcat_dynamic("1",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-					  case KEY_2:
-								strcat_dynamic("2",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-					  case KEY_3:
-								strcat_dynamic("3",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-					  case KEY_4:
-								strcat_dynamic("4",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-					  case KEY_5:
-								strcat_dynamic("5",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-					  case KEY_6:
-								strcat_dynamic("6",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-					  case KEY_7:
-								strcat_dynamic("7",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-					  case KEY_8:
-							  strcat_dynamic("8",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-					  case KEY_9:
-								strcat_dynamic("9",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-						case KEY_DOT:
-								strcat_dynamic(".",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-						case KEY_PLUS:
-								strcat_dynamic("+",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-					  case KEY_MINUS:
-								strcat_dynamic("-",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-					  case KEY_MUL:
-								strcat_dynamic("*",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-						case KEY_DIVID:
-								strcat_dynamic("/",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-						case KEY_LPARE:
-								strcat_dynamic("(",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-						case KEY_RPARE:
-								strcat_dynamic(")",&Line0,Line0EditCursor);
-								Line0cursorScroll(1,0);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-						case KEY_DEL:
-								if(!Line0Backspace(Line0EditCursor))
-								{
-										Line0cursorScroll(0,0);
-										mapLine02dispBuf(Line0mapBias);
-								}
-								break;
-						case KEY_LEFT:
-								Line0cursorScroll(0,1);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-						case KEY_RIGHT:	
-								Line0cursorScroll(1,1);
-								mapLine02dispBuf(Line0mapBias);
-								break;
-						case KEY_EQUAL:
-								input2RPN_conv();
-								break;
-				}
-		}
+		line0_memory = (char *)malloc(0);
+
 }
+
+
+/*****************************************************************************
+* @brief  update displayed line0 string content 
+* @param  none
+* @retval none
+******************************************************************************/
+static void gui_line0_displayUpdt(void)
+{
+		LCD_ShowStr(0,0,12,(uint8_t *)"                ",1);
+		LCD_ShowStr(0,0,12,(uint8_t *)line0_disp,1);
+		LCD_GRAM_Update();
+}
+
 
 /******************************************************************************
 * @brief  when press key_left or key_right,update cursor position or diaplay map bias
@@ -182,225 +282,171 @@ void Line0Key2mani(uint8_t key_val, uint8_t* key_update)
 								1:scroll key trig
 * @retval	none
 ******************************************************************************/
-void Line0cursorScroll(uint8_t dir, uint8_t mode)
+static void line0Cursor_scroll(uint8_t dir, uint8_t mode)
 {
-		uint8_t Line0len = strlen(Line0);
-	
-//		printf("Line0=");
-//		printf("%s\n",Line0);
-//		
-//		printf("strlen(Line0_disp)=");
-//		printf("%d\n",strlen(Line0_disp));
-//		
-//		printf("Line0CursorPos=");
-//		printf("%d\n",Line0CursorPos);
-//		
-//		printf("Line0EditCursor=");
-//		printf("%d\n",Line0EditCursor);
+		//get line0 memory content and disp content length
+		uint8_t line0len_memory = strlen(line0_memory);
+		uint8_t line0len_disp = strlen(line0_disp);
 	
 	
+		//scroll right
 		if(dir)
 		{
-			
-				if(strlen(Line0_disp)==16 && Line0len>16)
+				//如果line0长度已经超出屏幕显示范围并且显示内容已满
+				if(line0len_disp==16 && line0len_memory>16)
 				{
-						if(Line0CursorPos<16)
+						//如果显示光标还未达屏幕右边界
+						if(line0_cursor.dispCursor_pos<16)
 						{
-								Line0CursorPos++;
-								Line0EditCursor++;
+								//显示光标与操作光标同时右移1B，不用进行屏幕滚动
+								line0_cursor.dispCursor_pos++;
+								line0_cursor.memoryCursor_pos++;
 						}
-						else if(Line0CursorPos==16)
+						//此外，如果显示光标（和操作光标）正好达屏幕右边界
+						else if(line0_cursor.dispCursor_pos==16)
 						{
-								if(Line0EditCursor<Line0len)
-										Line0EditCursor++;
-								if(Line0len>16 && Line0mapBias<Line0len-16)
-										Line0mapBias++;
+								//如果操作光标还未达line0内存右边界
+								if(line0_cursor.memoryCursor_pos<line0len_memory)
+										//操作光标+1，显示光标在屏幕右边界不动
+										line0_cursor.memoryCursor_pos++;
+								//如果line0当前截取位置右侧还能有16B的截取裕量
+								if(line0_cursor.intercept_pos<line0len_memory-16)
+										//line0截取首地址右移1B，代表将要向右滚动1B长度
+										line0_cursor.intercept_pos++;
 						}
 				}
+				//此外，如果显示内容未满
 				else
 				{
+						//如果光标滚动由方向键强制触发
 						if(mode)
 						{
-								if(Line0CursorPos<strlen(Line0_disp))
+								//如果显示光标还未达屏幕显示长度
+								if(line0_cursor.dispCursor_pos<line0len_disp)
 								{
-										Line0CursorPos++;
-										Line0EditCursor++;
+										//显示光标与操作光标同时右移1B，不用进行屏幕滚动
+										line0_cursor.dispCursor_pos++;
+										line0_cursor.memoryCursor_pos++;
 								}
 						}
+						//如果光标滚动由字符输入自动触发
 						else
 						{
-								if(Line0CursorPos<=strlen(Line0_disp))
+								//如果显示光标还未达屏幕显示长度或刚好达到屏幕显示长度
+								if(line0_cursor.dispCursor_pos<=line0len_disp)
 								{
-										Line0CursorPos++;
-										Line0EditCursor++;
+										//显示光标与操作光标同时右移1B，不用进行屏幕滚动
+										line0_cursor.dispCursor_pos++;
+										line0_cursor.memoryCursor_pos++;
 								}
 						}
 				}
 		}
+		//scroll left
 		else
 		{
-				if(Line0CursorPos>0)
+				//如果光标滚动由方向键强制触发
+				if(mode)
 				{
-						Line0CursorPos--;
-						Line0EditCursor--;
+						//如果显示光标位置不在零点
+						if(line0_cursor.dispCursor_pos>0)
+						{
+								//显示光标与操作光标同时左移1B，不用进行屏幕滚动
+								line0_cursor.dispCursor_pos--;
+								line0_cursor.memoryCursor_pos--;
+						}
+						//如果显示光标位置刚好在零点
+						else if(line0_cursor.dispCursor_pos==0)
+						{
+								//如果这时操作光标没在零点处
+								if(line0_cursor.memoryCursor_pos>0)
+								{
+										//操作光标左移1B，不用进行屏幕滚动
+										line0_cursor.memoryCursor_pos--;
+										//如果这时屏幕被滚动过至少一次
+										if(line0_cursor.intercept_pos>0)
+												//向左回滚
+												line0_cursor.intercept_pos--;
+								}
+						}
 				}
-				else if(Line0CursorPos==0)
+				
+				//如果光标滚动由字符删除自动触发
+				else
 				{
-						if(Line0EditCursor>0)
-								Line0EditCursor--;
-						if(Line0len>16 && Line0mapBias>0)
-								Line0mapBias--;
+						//如果显示光标位置不在零点
+						if(line0_cursor.dispCursor_pos>0)
+						{
+								//显示光标与操作光标同时左移1B，不用进行屏幕滚动
+								line0_cursor.dispCursor_pos--;
+								line0_cursor.memoryCursor_pos--;
+						}
+						//如果显示光标位置被删到零点，并且line0被滚动至少1次，则进行翻页
+						if(line0_cursor.dispCursor_pos==0 && line0_cursor.intercept_pos>0)
+						{
+								//如果剩余未显示的字符串长度不足或刚好等于一整页
+								if(line0_cursor.intercept_pos<=16)
+								{
+										//翻页到line0最开始的地方
+										line0_cursor.dispCursor_pos=line0_cursor.intercept_pos;
+										line0_cursor.memoryCursor_pos=line0_cursor.intercept_pos;
+										line0_cursor.intercept_pos=0;
+								}
+								//如果剩余未显示的字符串长度大于一整页
+								if(line0_cursor.intercept_pos>16)
+								{
+										//向前翻一整页
+										line0_cursor.dispCursor_pos=16;
+										line0_cursor.intercept_pos-=16;
+								}
+						}
+					
 				}
+				
+				
+
 		}
-		LCD_ShowCursor(1,Line0CursorPos);
-}
-
-
-/******************************************************************************
-* @brief  Intercept 16bytes from Line0 source buffer to display buffer
-* @param  pos:Line0 source buffer address bias
-* @retval 0:success
-					1:pos out of range
-******************************************************************************/
-uint8_t mapLine02dispBuf(uint8_t pos)
-{	
-		if(strlen(Line0)<=16)
-				pos=0;
-	
-		if(pos>=0 && pos <=MAPBIAS_MAX)
-		{
-				memcpy(Line0_disp,Line0+pos,16);
-				Line0DispUpdt();
-		}
-}
-
-/******************************************************************************
-* @brief  Backspace in Line0 buffer at cursor pos
-* @param  cursor: expected backspace position
-* @retval 0:success
-					1:Line0 empty 
-******************************************************************************/
-uint8_t Line0Backspace(uint8_t cursor)
-{
-		if(cursor>0)
-		{
-				//new Line0 buffer size
-				uint8_t Line0_newsize = strlen(Line0);
-			
-				//copy the content on right side of old Line0 buffer to a cache
-				uint8_t RightCacheSize = strlen(Line0)-cursor+1;
-				char *RightCache = (char *)malloc(RightCacheSize);
-				memset(RightCache,0,RightCacheSize);		//significant step
-				memcpy(RightCache,Line0+cursor,RightCacheSize-1);
-
-				//copy the content on left side of old Line0 buffer to a cache
-				uint8_t LeftCacheSize = cursor;							//strlen of LeftCacheSize = cursor-1
-				char *LeftCache = (char *)malloc(LeftCacheSize);
-				memset(LeftCache,0,LeftCacheSize);				//significant step
-				memcpy(LeftCache,Line0,LeftCacheSize-1);
-
-				//release memory of old Line0 buffer
-				free(Line0);		
-				Line0 = (char *)malloc(Line0_newsize);		
-				memset(Line0,0,Line0_newsize);		//important step
-			
-				memcpy(Line0,LeftCache,strlen(LeftCache));
-				memcpy(Line0+strlen(LeftCache),RightCache,strlen(RightCache));	
-
-				free(RightCache);
-				free(LeftCache);
-				RightCache = NULL;
-				LeftCache = NULL;
-				return 0;
-		}
-		else
-				return 1;
-}
-
-///******************************************************************************
-//* @brief  add string "str" to str0 buffer
-//* @param  *str: pointer that point to "str"
-//					cursor: expected string insert position
-//* @retval 0:success
-//				  1:str0 buffer full
-//******************************************************************************/
-//uint8_t strcat_dynamic(char *str, char **str0, uint8_t cursor)
-//{
-//		//new Line0 buffer size
-//		uint8_t str0_newsize = strlen(*str0)+strlen(str)+1;
-//		//if meet the requirment,continue the operations
-//		if(str0_newsize <= LINE0_LEN_MAX)
-//		{
-//				//copy the content on right side of old Line0 buffer to a cache
-//				uint8_t RightCacheSize = strlen(*str0)-cursor+1;
-//				char *RightCache = (char *)malloc(RightCacheSize);
-//				memset(RightCache,0,RightCacheSize);		//significant step
-//				memcpy(RightCache,*str0+cursor,RightCacheSize-1);
-
-//				//copy the content on left side of old Line0 buffer to a cache
-//				uint8_t LeftCacheSize = cursor+1;					//cursor and left string len is equal in num
-//				char *LeftCache = (char *)malloc(LeftCacheSize);
-//				memset(LeftCache,0,LeftCacheSize);		//significant step
-//				memcpy(LeftCache,*str0,LeftCacheSize-1);
-//	
-//				//release memory of old Line0 buffer
-//				free(*str0);		
-//			  *str0 = (char *)malloc(str0_newsize);		
-//				memset(*str0,0,str0_newsize);		//important step
-//			
-//				memcpy(*str0,LeftCache,LeftCacheSize-1);			
-//				memcpy(*str0+LeftCacheSize-1,str,strlen(str));	
-//				memcpy(*str0+(LeftCacheSize-1)+strlen(str),RightCache,RightCacheSize-1);	
-//			
-//				free(RightCache);
-//				free(LeftCache);
-//			  RightCache = NULL;
-//				LeftCache = NULL;
-//				return 0;
-//		}
-//		return 1;
-//}
-
-/******************************************************************************
-* @brief  add string "str" to str0 buffer
-* @param  *str: pointer that point to "str"
-					cursor: expected string insert position
-* @retval 0:success
-				  1:str0 buffer full
-******************************************************************************/
-uint8_t strcat_dynamic(char *str, char **str0, uint8_t cursor)
-{
-		//new Line0 buffer size
-		uint8_t str0_newsize = strlen(*str0)+strlen(str)+1;
-		//if meet the requirment,continue the operations
-		if(str0_newsize <= LINE0_LEN_MAX)
-		{				
-				//copy the content on right side of old Line0 buffer to a cache
-				uint8_t RightCacheSize = strlen(*str0)-cursor+1;
-				char *RightCache = (char *)malloc(RightCacheSize);
-				memset(RightCache,0,RightCacheSize);		//significant step
-				memcpy(RightCache,*str0+cursor,RightCacheSize-1);
+		//更新屏幕光标显示
+		gui_updtCursor(1,line0_cursor.dispCursor_pos);
+		//截取屏幕显示字符串
+		line0Buf_intercept(line0_cursor.intercept_pos);
 		
-				//copy the content on left side of old Line0 buffer to a cache
-				uint8_t LeftCacheSize = cursor+1;					//cursor and left string len is equal in num
-				char *LeftCache = (char *)malloc(LeftCacheSize);
-				memset(LeftCache,0,LeftCacheSize);		//significant step
-				memcpy(LeftCache,*str0,LeftCacheSize-1);
+		
+		printf("intercept_pos=");
+		printf("%d\n\n",line0_cursor.intercept_pos);
+		
+		printf("Line0_disp=");
+		printf("%s\n\n",line0_disp);
 	
-				//release memory of old Line0 buffer
-				free(*str0);		
-			  *str0 = (char *)malloc(str0_newsize);		
-				memset(*str0,0,str0_newsize);		//important step
-			
-				memcpy(*str0,LeftCache,LeftCacheSize-1);			
-				memcpy(*str0+LeftCacheSize-1,str,strlen(str));	
-				memcpy(*str0+(LeftCacheSize-1)+strlen(str),RightCache,RightCacheSize-1);	
-			
-				free(RightCache);
-				RightCache = NULL;
-				free(LeftCache);
-				LeftCache = NULL;
-				return 0;
+		printf("strlen(Line0_disp)=");
+		printf("%d\n\n\n",strlen(line0_disp));
+	
+		printf("strlen(Line0)=");
+		printf("%d\n\n",strlen(line0_memory));
+		
+		printf("Line0CursorPos=");
+		printf("%d\n\n",line0_cursor.dispCursor_pos);
+		
+		printf("Line0EditCursor=");
+		printf("%d\n\n\n",line0_cursor.memoryCursor_pos);
+}
+
+
+/******************************************************************************
+* @brief  Intercept 16bytes from Line0 memory buffer to display buffer
+* @param  start_pos: Line0 source buffer interceptng start address
+* @retval 0: success
+					1: pos out of range
+******************************************************************************/
+static uint8_t line0Buf_intercept(uint8_t start_pos)
+{
+//		//if line0 length is shortter than 16
+//		if(strlen(line0_memory)<=16)
+//				start_pos=0;
+		//if line0 length is long enough
+		if(start_pos>=0 && start_pos <=MAPBIAS_MAX)
+		{
+				memcpy(line0_disp,line0_memory+start_pos,16);
+				gui_line0_displayUpdt();
 		}
-		return 1;
 }

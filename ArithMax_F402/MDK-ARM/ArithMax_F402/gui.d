@@ -35,8 +35,8 @@ arithmax_f402\gui.o: ../Core/Inc/tim.h
 arithmax_f402\gui.o: ../Core/Inc/main.h
 arithmax_f402\gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 arithmax_f402\gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-arithmax_f402\gui.o: ./Drivers/matkeyboard.h
+arithmax_f402\gui.o: .\UserApps\algo\dynamic_string.h
+arithmax_f402\gui.o: .\Hardware\matkeyboard.h
 arithmax_f402\gui.o: UserApps\arithmatic.h
-arithmax_f402\gui.o: UserApps\stack.h
 arithmax_f402\gui.o: UserApps\gui.h
-arithmax_f402\gui.o: ./Drivers/st7565.h
+arithmax_f402\gui.o: .\Hardware\st7565.h

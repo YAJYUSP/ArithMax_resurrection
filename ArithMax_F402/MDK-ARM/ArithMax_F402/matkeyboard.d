@@ -1,5 +1,5 @@
-arithmax_f402\matkeyboard.o: Drivers\Matkeyboard.c
-arithmax_f402\matkeyboard.o: Drivers\matkeyboard.h
+arithmax_f402\matkeyboard.o: Hardware\Matkeyboard.c
+arithmax_f402\matkeyboard.o: Hardware\matkeyboard.h
 arithmax_f402\matkeyboard.o: ../Core/Inc/main.h
 arithmax_f402\matkeyboard.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 arithmax_f402\matkeyboard.o: ../Core/Inc/stm32f4xx_hal_conf.h

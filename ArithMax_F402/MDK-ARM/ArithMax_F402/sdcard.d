@@ -1,5 +1,5 @@
-arithmax_f402\sdcard.o: Drivers\SDCard.c
-arithmax_f402\sdcard.o: Drivers\sdcard.h
+arithmax_f402\sdcard.o: Hardware\SDCard.c
+arithmax_f402\sdcard.o: Hardware\sdcard.h
 arithmax_f402\sdcard.o: ../Core/Inc/main.h
 arithmax_f402\sdcard.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 arithmax_f402\sdcard.o: ../Core/Inc/stm32f4xx_hal_conf.h

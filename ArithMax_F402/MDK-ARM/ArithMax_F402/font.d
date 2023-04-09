@@ -1,5 +1,5 @@
-arithmax_f402\font.o: Drivers\font.c
-arithmax_f402\font.o: Drivers\font.h
+arithmax_f402\font.o: Hardware\font.c
+arithmax_f402\font.o: Hardware\font.h
 arithmax_f402\font.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 arithmax_f402\font.o: ../Core/Inc/stm32f4xx_hal_conf.h
 arithmax_f402\font.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h

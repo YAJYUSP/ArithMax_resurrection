@@ -1,5 +1,5 @@
-arithmax_f402\led.o: Drivers\led.c
-arithmax_f402\led.o: Drivers\led.h
+arithmax_f402\led.o: Hardware\led.c
+arithmax_f402\led.o: Hardware\led.h
 arithmax_f402\led.o: ../Core/Inc/main.h
 arithmax_f402\led.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 arithmax_f402\led.o: ../Core/Inc/stm32f4xx_hal_conf.h

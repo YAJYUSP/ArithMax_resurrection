@@ -109,11 +109,10 @@ int main(void)
 	
 	CH452Init();
 	LCD_Init();
-	arithInit();
-	dispstr_malloc();
+	gui_init();
 	
-//	LCD_ShowStr(0,0,12,(uint8_t *)"Powered By ARM",1);
-//	LCD_ShowStr(0,13,12,(uint8_t *)"Cortex-M4",1);
+	LCD_ShowStr(0,0,12,(uint8_t *)"Powered By ARM",1);
+	LCD_ShowStr(0,13,12,(uint8_t *)"Cortex-M4",1);
 	
 
 
@@ -125,7 +124,7 @@ int main(void)
   {
 		if(Key_updateFlag)
 		{
-				Line0Key2mani(KeyVal,(uint8_t *)&Key_updateFlag);
+				gui_line0Updt_from_keypad(KeyVal,(uint8_t *)&Key_updateFlag);
 				
 		}
     /* USER CODE END WHILE */

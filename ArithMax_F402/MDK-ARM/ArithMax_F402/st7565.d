@@ -1,4 +1,4 @@
-arithmax_f402\st7565.o: Drivers\st7565.c
+arithmax_f402\st7565.o: Hardware\st7565.c
 arithmax_f402\st7565.o: ../Core/Inc/main.h
 arithmax_f402\st7565.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 arithmax_f402\st7565.o: ../Core/Inc/stm32f4xx_hal_conf.h
@@ -33,5 +33,5 @@ arithmax_f402\st7565.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex
 arithmax_f402\st7565.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 arithmax_f402\st7565.o: ../Core/Inc/tim.h
 arithmax_f402\st7565.o: ../Core/Inc/main.h
-arithmax_f402\st7565.o: Drivers\st7565.h
-arithmax_f402\st7565.o: Drivers\font.h
+arithmax_f402\st7565.o: Hardware\st7565.h
+arithmax_f402\st7565.o: Hardware\font.h

@@ -1,10 +1,5 @@
 --cpu=Cortex-M4.fp.sp
 "arithmax_f402\startup_stm32f401xc.o"
-"arithmax_f402\st7565.o"
-"arithmax_f402\font.o"
-"arithmax_f402\led.o"
-"arithmax_f402\matkeyboard.o"
-"arithmax_f402\sdcard.o"
 "arithmax_f402\main.o"
 "arithmax_f402\gpio.o"
 "arithmax_f402\tim.o"
@@ -44,6 +39,12 @@
 "arithmax_f402\stm32f4xx_hal_exti.o"
 "arithmax_f402\stm32f4xx_hal_uart.o"
 "arithmax_f402\system_stm32f4xx.o"
+"arithmax_f402\font.o"
+"arithmax_f402\led.o"
+"arithmax_f402\matkeyboard.o"
+"arithmax_f402\sdcard.o"
+"arithmax_f402\st7565.o"
+"arithmax_f402\dynamic_string.o"
 --library_type=microlib --strict --scatter "ArithMax_F402\ArithMax_F402.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

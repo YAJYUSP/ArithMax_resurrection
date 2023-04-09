@@ -27,7 +27,26 @@ Project File Date:  03/31/2023
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'ArithMax_F402'
-"ArithMax_F402\ArithMax_F402.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f401xc.h(52): warning:  #47-D: incompatible redefinition of macro "__FPU_PRESENT" 
+  #define __FPU_PRESENT             1U       /*!< FPU present                                   */
+.\Hardware\st7565.h(67): warning:  #1-D: last line of file ends without a newline
+  #endif
+.\Hardware\led.h(12): warning:  #1-D: last line of file ends without a newline
+  #endif
+.\Hardware\matkeyboard.h(127): warning:  #1-D: last line of file ends without a newline
+  #endif
+./UserApps/arithmatic.h(15): warning:  #1-D: last line of file ends without a newline
+  //#endif
+./UserApps/gui.h(40): warning:  #1-D: last line of file ends without a newline
+  #endif
+.\Hardware\sdcard.h(15): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Core/Src/main.c: 7 warnings, 0 errors
+linking...
+Program Size: Code=10884 RO-data=3124 RW-data=436 ZI-data=18740  
+FromELF: creating hex file...
+"ArithMax_F402\ArithMax_F402.axf" - 0 Error(s), 7 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -51,7 +70,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:00
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F401xC,ARM_MATH_CM4,__FPU_PRESENT</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./Drivers;./UserApps;./DSP;./FATFS</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;./UserApps;./DSP;.\Hardware;.\UserApps\algo</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -393,31 +393,6 @@
         <Group>
           <GroupName>Application/User/Core</GroupName>
           <Files>
-            <File>
-              <FileName>st7565.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Drivers\st7565.c</FilePath>
-            </File>
-            <File>
-              <FileName>font.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Drivers\font.c</FilePath>
-            </File>
-            <File>
-              <FileName>led.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Drivers\led.c</FilePath>
-            </File>
-            <File>
-              <FileName>Matkeyboard.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Drivers\Matkeyboard.c</FilePath>
-            </File>
-            <File>
-              <FileName>SDCard.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Drivers\SDCard.c</FilePath>
-            </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
@@ -590,9 +565,6 @@
               <FilePath>.\DSP\CommonTables\arm_common_tables.c</FilePath>
             </File>
           </Files>
-        </Group>
-        <Group>
-          <GroupName>FATFS</GroupName>
         </Group>
         <Group>
           <GroupName>Drivers/STM32F4xx_HAL_Driver</GroupName>
@@ -1691,6 +1663,46 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Hardware</GroupName>
+          <Files>
+            <File>
+              <FileName>font.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\font.c</FilePath>
+            </File>
+            <File>
+              <FileName>led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\led.c</FilePath>
+            </File>
+            <File>
+              <FileName>Matkeyboard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\Matkeyboard.c</FilePath>
+            </File>
+            <File>
+              <FileName>SDCard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\SDCard.c</FilePath>
+            </File>
+            <File>
+              <FileName>st7565.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\st7565.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>algorithm</GroupName>
+          <Files>
+            <File>
+              <FileName>dynamic_string.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\UserApps\algo\dynamic_string.c</FilePath>
             </File>
           </Files>
         </Group>

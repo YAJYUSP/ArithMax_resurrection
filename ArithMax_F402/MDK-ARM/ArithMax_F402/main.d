@@ -37,12 +37,11 @@ arithmax_f402\main.o: ../Core/Inc/usart.h
 arithmax_f402\main.o: ../Core/Inc/gpio.h
 arithmax_f402\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 arithmax_f402\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-arithmax_f402\main.o: ./Drivers/st7565.h
-arithmax_f402\main.o: ./Drivers/led.h
-arithmax_f402\main.o: ./Drivers/matkeyboard.h
+arithmax_f402\main.o: .\Hardware\st7565.h
+arithmax_f402\main.o: .\Hardware\led.h
+arithmax_f402\main.o: .\Hardware\matkeyboard.h
 arithmax_f402\main.o: ./UserApps/arithmatic.h
-arithmax_f402\main.o: ./UserApps/stack.h
-arithmax_f402\main.o: ./Drivers/font.h
+arithmax_f402\main.o: .\Hardware\font.h
 arithmax_f402\main.o: ./UserApps/gui.h
-arithmax_f402\main.o: ./Drivers/sdcard.h
+arithmax_f402\main.o: .\Hardware\sdcard.h
 arithmax_f402\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

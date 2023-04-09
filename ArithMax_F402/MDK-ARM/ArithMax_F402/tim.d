@@ -33,6 +33,6 @@ arithmax_f402\tim.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 arithmax_f402\tim.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 arithmax_f402\tim.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 arithmax_f402\tim.o: ../Core/Inc/tim.h
-arithmax_f402\tim.o: ./Drivers/led.h
+arithmax_f402\tim.o: .\Hardware\led.h
 arithmax_f402\tim.o: ./UserApps/gui.h
-arithmax_f402\tim.o: ./Drivers/st7565.h
+arithmax_f402\tim.o: .\Hardware\st7565.h
